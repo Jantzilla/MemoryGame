@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         btn_1.setOnClickListener(this)
         btn_2.setOnClickListener(this)
         btn_3.setOnClickListener(this)
@@ -18,18 +19,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
+        val intent = Intent(this,GameActivity::class.java)
         when (v?.id) {
             R.id.btn_1 -> {
-                startActivity(Intent(this, GameActivity::class.java))
+                intent.putExtra("Pairs",5)
+                startActivity(intent)
             }
             R.id.btn_2 -> {
-                startActivity(Intent(this, GameActivity::class.java))
+                intent.putExtra("Pairs",6)
+                startActivity(intent)
             }
             R.id.btn_3 -> {
-                startActivity(Intent(this, GameActivity::class.java))
+                intent.putExtra("Pairs",8)
+                startActivity(intent)
             }
             R.id.btn_4 -> {
-                startActivity(Intent(this, GameActivity::class.java))
+                intent.putExtra("Pairs",10)
+                startActivity(intent)
             }
         }
     }
