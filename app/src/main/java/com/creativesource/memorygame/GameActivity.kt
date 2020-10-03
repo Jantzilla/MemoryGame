@@ -3,6 +3,7 @@ package com.creativesource.memorygame
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
+import kotlinx.android.synthetic.main.action_bar.*
 
 class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,5 +15,8 @@ class GameActivity : AppCompatActivity() {
         actionBar?.setDisplayShowCustomEnabled(true)
         actionBar?.setHomeAsUpIndicator(R.mipmap.ic_launcher)
         actionBar?.show()
+
+        val pairs = intent.getIntExtra("Pairs", 5)
+        tv_pairs.text = pairs.toString()
     }
 }
