@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.action_bar.*
 
 class GameActivity : AppCompatActivity() {
@@ -17,6 +18,7 @@ class GameActivity : AppCompatActivity() {
         actionBar?.setHomeAsUpIndicator(R.mipmap.ic_launcher)
         actionBar?.show()
 
+        val matched = 0
         val pairs = intent.getIntExtra("Pairs", 5)
         tv_pairs.text = pairs.toString()
 
@@ -26,6 +28,31 @@ class GameActivity : AppCompatActivity() {
             }
             override fun onFinish() {
 
+                val dialog = AlertDialog.Builder(this@GameActivity)
+                dialog.setCancelable(false)
+
+                if(matched == pairs) {
+
+                    dialog.setMessage("You Did It!!!")
+                        .setNegativeButton("Exit") { _, _ -> finish() }
+                        .create()
+                        .show()
+
+                } else {
+
+                    dialog.setMessage("Almost...")
+                        .setPositiveButton("Retry") { _, _ ->
+                            run {
+                                finish()
+                                intent.putExtra("Pairs", pairs)
+                                startActivity(intent)
+                            }
+                        }
+                        .setNegativeButton("Exit") { _, _ -> finish() }
+                        .create()
+                        .show()
+
+                }
             }
         }
         timer.start()
