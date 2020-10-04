@@ -3,7 +3,6 @@ package com.creativesource.memorygame
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -96,26 +95,29 @@ class GameActivity : AppCompatActivity(), ClickListener {
     }
 
     override fun onClickListener(cardIndex: Int, cardId: Int) {
-        checkMatch(cardIndex, cardId)
+        revealCard(cardIndex, cardId)
     }
 
-    private fun checkMatch(cardIndex: Int, cardId: Int) {
+    private fun revealCard(cardIndex: Int, cardId: Int) {
         if (recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.iv_card?.visibility == View.VISIBLE) {
             recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.iv_card?.visibility = View.INVISIBLE
+            checkMatch(cardId, cardIndex)
+        }
+    }
 
-            if (chosenCard != -1) {
-                if (chosenCard == cardId) {
-                    matched++
-                    tv_matched.text = matched.toString()
-                    checkSuccess()
-                } else {
-                    hidePair(cardIndex)
-                }
-                chosenCard = -1
+    private fun checkMatch(cardId: Int, cardIndex: Int) {
+        if (chosenCard != -1) {
+            if (chosenCard == cardId) {
+                matched++
+                tv_matched.text = matched.toString()
+                checkSuccess()
             } else {
-                chosenCard = cardId
-                lastCardIndex = cardIndex
+                hidePair(cardIndex)
             }
+            chosenCard = -1
+        } else {
+            chosenCard = cardId
+            lastCardIndex = cardIndex
         }
     }
 
