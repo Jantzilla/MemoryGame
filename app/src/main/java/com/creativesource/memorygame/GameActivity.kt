@@ -1,6 +1,9 @@
 package com.creativesource.memorygame
 
+import android.graphics.Bitmap
 import android.graphics.Typeface
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -32,10 +35,13 @@ class GameActivity : AppCompatActivity(), ClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
+        val drawable = resources.getDrawable(R.drawable.back)
+        val bitmap = (drawable as BitmapDrawable).bitmap
+        val newDrawable: Drawable = BitmapDrawable(resources, Bitmap.createScaledBitmap(bitmap, 185, 170, true))
         val actionBar: ActionBar? = this.supportActionBar
         actionBar?.setCustomView(R.layout.action_bar)
         actionBar?.setDisplayShowCustomEnabled(true)
-        actionBar?.setHomeAsUpIndicator(R.drawable.back)
+        actionBar?.setHomeAsUpIndicator(newDrawable)
         actionBar?.show()
 
         val typeface = Typeface.createFromAsset(assets, "ColorTube.otf")
