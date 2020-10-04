@@ -94,10 +94,10 @@
         android:visibility="gone">
         <ImageView
             android:id="@+id/iv_dialog_back"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginLeft="14dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
             android:src="@drawable/back"/>
         <TextView
             android:id="@+id/tv_dialog"
