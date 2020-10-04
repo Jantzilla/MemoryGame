@@ -68,29 +68,17 @@ class GameActivity : AppCompatActivity(), ClickListener {
 
                 val dialog = AlertDialog.Builder(this@GameActivity)
                 dialog.setCancelable(false)
-
-                if(matched == pairs) {
-
-                    dialog.setMessage("You Did It!!!")
-                        .setNegativeButton("Exit") { _, _ -> finish() }
-                        .create()
-                        .show()
-
-                } else {
-
-                    dialog.setMessage("Almost...")
-                        .setPositiveButton("Retry") { _, _ ->
-                            run {
-                                finish()
-                                intent.putExtra("Pairs", pairs)
-                                startActivity(intent)
-                            }
+                    .setMessage("Almost...")
+                    .setNegativeButton("Exit") { _, _ -> finish() }
+                    .setPositiveButton("Retry") { _, _ ->
+                        run {
+                            finish()
+                            intent.putExtra("Pairs", pairs)
+                            startActivity(intent)
                         }
-                        .setNegativeButton("Exit") { _, _ -> finish() }
-                        .create()
-                        .show()
-
-                }
+                    }
+                    .create()
+                    .show()
             }
         }
         timer.start()
