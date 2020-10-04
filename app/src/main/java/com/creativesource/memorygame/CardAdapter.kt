@@ -14,7 +14,7 @@ class CardAdapter(private val clickListener: ClickListener, private val cardCoun
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.itemView.tv_card.text = cardCount[position].toString()
+        holder.itemView.iv_front.setImageResource(cardCount[position])
         holder.itemView.setOnClickListener {
             clickListener.onClickListener(position, cardCount[position])
         }
