@@ -1,5 +1,6 @@
 package com.creativesource.memorygame
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -36,6 +37,12 @@ class GameActivity : AppCompatActivity(), ClickListener {
         actionBar?.setDisplayShowCustomEnabled(true)
         actionBar?.setHomeAsUpIndicator(R.drawable.back)
         actionBar?.show()
+
+        val typeface = Typeface.createFromAsset(assets, "ColorTube.otf")
+        tv_time.typeface = typeface
+        tv_matched.typeface = typeface
+        tv_divider.typeface = typeface
+        tv_pairs.typeface = typeface
 
         val rowCount = intent.getIntExtra("Rows", 5)
         val columnCount = intent.getIntExtra("Columns", 2)

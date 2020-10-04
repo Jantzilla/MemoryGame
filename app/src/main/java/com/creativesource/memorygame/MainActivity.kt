@@ -1,6 +1,7 @@
 package com.creativesource.memorygame
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -12,10 +13,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val typeface = Typeface.createFromAsset(assets, "ColorTube.otf")
+
         btn_1.setOnClickListener(this)
+        tv_1.typeface = typeface
         btn_2.setOnClickListener(this)
+        tv_2.typeface = typeface
         btn_3.setOnClickListener(this)
+        tv_3.typeface = typeface
         btn_4.setOnClickListener(this)
+        tv_4.typeface = typeface
     }
 
     override fun onClick(v: View?) {
