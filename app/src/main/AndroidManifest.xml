@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".GameActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName="com.creativesource.memorygame.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
