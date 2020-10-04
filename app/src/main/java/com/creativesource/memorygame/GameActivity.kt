@@ -121,6 +121,7 @@ class GameActivity : AppCompatActivity(), ClickListener {
 
     private fun checkSuccess() {
         if(matched == pairs) {
+            timer.cancel()
             createSuccessDialog()
         }
     }
