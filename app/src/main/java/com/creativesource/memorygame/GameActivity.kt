@@ -45,8 +45,8 @@ class GameActivity : AppCompatActivity(), ClickListener {
         val cardIds: MutableList<Int> = ArrayList()
 
         for (i in 1..pairs) {
-            cardIds.add(imageIds[i])
-            cardIds.add(imageIds[i])
+            cardIds.add(imageIds[i - 1])
+            cardIds.add(imageIds[i - 1])
         }
 
         cardIds.shuffle()
