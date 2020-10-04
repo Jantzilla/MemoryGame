@@ -46,6 +46,8 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
         tv_matched.typeface = typeface
         tv_divider.typeface = typeface
         tv_pairs.typeface = typeface
+        tv_dialog.typeface = typeface
+        tv_retry.typeface = typeface
 
         val rowCount = intent.getIntExtra("Rows", 5)
         val columnCount = intent.getIntExtra("Columns", 2)
