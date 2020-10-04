@@ -14,7 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.action_bar.*
+import kotlinx.android.synthetic.main.activity_game.*
 import kotlinx.android.synthetic.main.card.view.*
 
 class GameActivity : AppCompatActivity(), ClickListener {
@@ -35,13 +35,9 @@ class GameActivity : AppCompatActivity(), ClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        val drawable = resources.getDrawable(R.drawable.back)
-        val bitmap = (drawable as BitmapDrawable).bitmap
-        val newDrawable: Drawable = BitmapDrawable(resources, Bitmap.createScaledBitmap(bitmap, 185, 170, true))
+        this.setSupportActionBar(toolbar)
         val actionBar: ActionBar? = this.supportActionBar
-        actionBar?.setCustomView(R.layout.action_bar)
-        actionBar?.setDisplayShowCustomEnabled(true)
-        actionBar?.setHomeAsUpIndicator(newDrawable)
+        actionBar?.setDisplayShowTitleEnabled(false)
         actionBar?.show()
 
         val typeface = Typeface.createFromAsset(assets, "ColorTube.otf")
