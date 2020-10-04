@@ -18,6 +18,7 @@ class GameActivity : AppCompatActivity(), ClickListener {
     private var  matched = 0
     private var lastCardIndex = -1
     private var pairs = 0
+    private var time = "30"
     private lateinit var timer: CountDownTimer
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -57,12 +58,15 @@ class GameActivity : AppCompatActivity(), ClickListener {
 
         }
 
-        timer = object: CountDownTimer(30000, 1000) {
+        timer = object: CountDownTimer(33000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                tv_time.setText((millisUntilFinished / 1000).toString())
+                time = (millisUntilFinished / 1000).toString()
 
-                if(tv_time.text == "28") {
-                    flipCards()
+                if(time <= "30") {
+                    if(time == "30") {
+                        flipCards()
+                    }
+                    tv_time.text = time
                 }
             }
             override fun onFinish() {
