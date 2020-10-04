@@ -1,9 +1,6 @@
 package com.creativesource.memorygame
 
-import android.graphics.Bitmap
 import android.graphics.Typeface
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -93,19 +90,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
             }
             override fun onFinish() {
 
-                val dialog = AlertDialog.Builder(this@GameActivity)
-                dialog.setCancelable(false)
-                    .setMessage("Almost...")
-                    .setNegativeButton("Exit") { _, _ -> finish() }
-                    .setPositiveButton("Retry") { _, _ ->
-                        run {
-                            finish()
-                            intent.putExtra("Pairs", pairs)
-                            startActivity(intent)
-                        }
-                    }
-                    .create()
-                    .show()
+                createFailDialog()
             }
         }
         timer.start()
@@ -159,12 +144,13 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
     }
 
     private fun createSuccessDialog() {
-        val dialog = AlertDialog.Builder(this@GameActivity)
-        dialog.setCancelable(false)
-            .setMessage("You Did It!!!")
-            .setNegativeButton("Exit") { _, _ -> finish() }
-            .create()
-            .show()
+        rl_dialog.visibility = View.VISIBLE
+    }
+
+    private fun createFailDialog() {
+        rl_dialog.visibility = View.VISIBLE
+        tv_dialog.text = "Almost..."
+        tv_retry.visibility = View.VISIBLE
     }
 
     private fun hidePair(cardIndex: Int) {
