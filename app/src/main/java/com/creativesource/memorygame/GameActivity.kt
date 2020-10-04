@@ -119,8 +119,7 @@ class GameActivity : AppCompatActivity(), ClickListener {
                     matched++
                     tv_matched.text = matched.toString()
                 } else {
-                    recyclerView.findViewHolderForAdapterPosition(lastCardIndex)?.itemView?.iv_card?.visibility = View.VISIBLE
-                    recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.iv_card?.visibility = View.VISIBLE
+                    hidePair(cardIndex)
                 }
                 chosenCard = -1
             } else {
@@ -128,6 +127,13 @@ class GameActivity : AppCompatActivity(), ClickListener {
                 lastCardIndex = cardIndex
             }
         }
+    }
+
+    private fun hidePair(cardIndex: Int) {
+        recyclerView.findViewHolderForAdapterPosition(lastCardIndex)?.itemView?.iv_card?.visibility =
+            View.VISIBLE
+        recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.iv_card?.visibility =
+            View.VISIBLE
     }
 }
 
