@@ -16,6 +16,7 @@ class GameActivity : AppCompatActivity(), ClickListener {
     private var chosenCard = -1
     private var  matched = 0
     private var lastCardIndex = -1
+    private var pairs = 0
     private lateinit var timer: CountDownTimer
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -32,7 +33,7 @@ class GameActivity : AppCompatActivity(), ClickListener {
         actionBar?.show()
 
         val columnCount = intent.getIntExtra("Columns", 2)
-        val pairs = intent.getIntExtra("Pairs", 5)
+        pairs = intent.getIntExtra("Pairs", 5)
 
         tv_pairs.text = pairs.toString()
 
@@ -118,6 +119,7 @@ class GameActivity : AppCompatActivity(), ClickListener {
                 if (chosenCard == cardId) {
                     matched++
                     tv_matched.text = matched.toString()
+                    checkSuccess()
                 } else {
                     hidePair(cardIndex)
                 }
@@ -129,11 +131,24 @@ class GameActivity : AppCompatActivity(), ClickListener {
         }
     }
 
+    private fun checkSuccess() {
+        if(matched == pairs) {
+            createSuccessDialog()
+        }
+    }
+
+    private fun createSuccessDialog() {
+        val dialog = AlertDialog.Builder(this@GameActivity)
+        dialog.setCancelable(false)
+            .setMessage("You Did It!!!")
+            .setNegativeButton("Exit") { _, _ -> finish() }
+            .create()
+            .show()
+    }
+
     private fun hidePair(cardIndex: Int) {
-        recyclerView.findViewHolderForAdapterPosition(lastCardIndex)?.itemView?.iv_card?.visibility =
-            View.VISIBLE
-        recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.iv_card?.visibility =
-            View.VISIBLE
+        recyclerView.findViewHolderForAdapterPosition(lastCardIndex)?.itemView?.iv_card?.visibility = View.VISIBLE
+        recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.iv_card?.visibility = View.VISIBLE
     }
 }
 
