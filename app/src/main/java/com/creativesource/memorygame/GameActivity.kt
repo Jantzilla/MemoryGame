@@ -37,6 +37,7 @@ class GameActivity : AppCompatActivity(), ClickListener {
         actionBar?.setHomeAsUpIndicator(R.drawable.back)
         actionBar?.show()
 
+        val rowCount = intent.getIntExtra("Rows", 5)
         val columnCount = intent.getIntExtra("Columns", 2)
         pairs = intent.getIntExtra("Pairs", 5)
 
@@ -51,7 +52,12 @@ class GameActivity : AppCompatActivity(), ClickListener {
 
         cardIds.shuffle()
 
-        viewManager = GridLayoutManager(this, columnCount)
+        viewManager = object : GridLayoutManager(this, columnCount) {
+            override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
+                lp.height = (height / rowCount) - 85
+                return true
+            }
+        }
         viewAdapter = CardAdapter(this, cardIds)
 
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
