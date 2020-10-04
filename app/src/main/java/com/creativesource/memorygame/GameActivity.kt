@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_game.*
 import kotlinx.android.synthetic.main.card.view.*
 
-class GameActivity : AppCompatActivity(), ClickListener {
+class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
     private lateinit var timer: CountDownTimer
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -34,6 +34,10 @@ class GameActivity : AppCompatActivity(), ClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
+
+        iv_back.setOnClickListener(this)
+        iv_dialog_back.setOnClickListener(this)
+        tv_retry.setOnClickListener(this)
 
         this.setSupportActionBar(toolbar)
         val actionBar: ActionBar? = this.supportActionBar
@@ -170,6 +174,22 @@ class GameActivity : AppCompatActivity(), ClickListener {
             recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.iv_card?.visibility = View.VISIBLE
             isWaiting = false
         }, 1000)
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.iv_back -> {
+                onBackPressed()
+            }
+            R.id.iv_dialog_back -> {
+                onBackPressed()
+            }
+            R.id.tv_retry -> {
+                finish()
+                intent.putExtra("Pairs", pairs)
+                startActivity(intent)
+            }
+        }
     }
 }
 
