@@ -16,7 +16,7 @@ class CardAdapter(private val clickListener: ClickListener, private val cardCoun
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.itemView.tv_card.text = cardCount[position].toString()
         holder.itemView.setOnClickListener {
-            clickListener.onClickListener(cardCount[position])
+            clickListener.onClickListener(position, cardCount[position])
         }
     }
 
