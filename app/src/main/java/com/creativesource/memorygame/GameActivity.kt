@@ -13,6 +13,9 @@ import kotlinx.android.synthetic.main.action_bar.*
 import kotlinx.android.synthetic.main.card.view.*
 
 class GameActivity : AppCompatActivity(), ClickListener {
+    private var chosenCard = -1
+    private var  matched = 0
+    private var lastCardIndex = -1
     private lateinit var timer: CountDownTimer
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -28,7 +31,6 @@ class GameActivity : AppCompatActivity(), ClickListener {
         actionBar?.setHomeAsUpIndicator(R.mipmap.ic_launcher)
         actionBar?.show()
 
-        val matched = 0
         val columnCount = intent.getIntExtra("Columns", 2)
         val pairs = intent.getIntExtra("Pairs", 5)
 
@@ -104,11 +106,31 @@ class GameActivity : AppCompatActivity(), ClickListener {
         timer.cancel()
     }
 
-    override fun onClickListener(i: Int) {
-        Toast.makeText(this, "Card Id $i", Toast.LENGTH_SHORT).show()
+    override fun onClickListener(cardIndex: Int, cardId: Int) {
+        checkMatch(cardIndex, cardId)
+    }
+
+    private fun checkMatch(cardIndex: Int, cardId: Int) {
+        if (recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.iv_card?.visibility == View.VISIBLE) {
+            recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.iv_card?.visibility = View.INVISIBLE
+
+            if (chosenCard != -1) {
+                if (chosenCard == cardId) {
+                    matched++
+                    tv_matched.text = matched.toString()
+                } else {
+                    recyclerView.findViewHolderForAdapterPosition(lastCardIndex)?.itemView?.iv_card?.visibility = View.VISIBLE
+                    recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.iv_card?.visibility = View.VISIBLE
+                }
+                chosenCard = -1
+            } else {
+                chosenCard = cardId
+                lastCardIndex = cardIndex
+            }
+        }
     }
 }
 
 interface ClickListener {
-    fun onClickListener(i:Int)
+    fun onClickListener(cardIndex: Int, cardId: Int)
 }
