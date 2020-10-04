@@ -14,16 +14,18 @@ import kotlinx.android.synthetic.main.action_bar.*
 import kotlinx.android.synthetic.main.card.view.*
 
 class GameActivity : AppCompatActivity(), ClickListener {
+    private lateinit var timer: CountDownTimer
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
     private var isWaiting = false
     private var chosenCard = -1
     private var  matched = 0
     private var lastCardIndex = -1
     private var pairs = 0
     private var time = "30"
-    private lateinit var timer: CountDownTimer
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-    private lateinit var viewManager: RecyclerView.LayoutManager
+    private val imageIds = intArrayOf(R.drawable.bat, R.drawable.cat, R.drawable.cow, R.drawable.dragon, R.drawable.ghost,
+                                     R.drawable.hen, R.drawable.horse, R.drawable.pig, R.drawable.man, R.drawable.spider)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +45,8 @@ class GameActivity : AppCompatActivity(), ClickListener {
         val cardIds: MutableList<Int> = ArrayList()
 
         for (i in 1..pairs) {
-            cardIds.add(i)
-            cardIds.add(i)
+            cardIds.add(imageIds[i])
+            cardIds.add(imageIds[i])
         }
 
         cardIds.shuffle()
