@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.action_bar.*
 
 class GameActivity : AppCompatActivity() {
+    private lateinit var timer: CountDownTimer
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
@@ -49,7 +50,7 @@ class GameActivity : AppCompatActivity() {
 
         }
 
-        val timer = object: CountDownTimer(30000, 1000) {
+        timer = object: CountDownTimer(30000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 tv_time.setText((millisUntilFinished / 1000).toString())
             }
@@ -83,5 +84,10 @@ class GameActivity : AppCompatActivity() {
             }
         }
         timer.start()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timer.cancel()
     }
 }
