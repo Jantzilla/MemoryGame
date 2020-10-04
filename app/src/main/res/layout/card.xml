@@ -8,14 +8,14 @@
 
     <ImageView
         android:id="@+id/iv_front"
-        android:layout_width="80dp"
-        android:layout_height="120dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/cow"/>
 
     <ImageView
         android:id="@+id/iv_card"
-        android:layout_width="80dp"
-        android:layout_height="120dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/card"
         android:visibility="invisible"/>
 
