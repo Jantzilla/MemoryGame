@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.action_bar.*
 import kotlinx.android.synthetic.main.card.view.*
 
 class GameActivity : AppCompatActivity(), ClickListener {
+    private var isWaiting = false
     private var chosenCard = -1
     private var  matched = 0
     private var lastCardIndex = -1
@@ -101,7 +102,9 @@ class GameActivity : AppCompatActivity(), ClickListener {
     }
 
     override fun onClickListener(cardIndex: Int, cardId: Int) {
-        revealCard(cardIndex, cardId)
+        if(!isWaiting) {
+            revealCard(cardIndex, cardId)
+        }
     }
 
     private fun revealCard(cardIndex: Int, cardId: Int) {
@@ -144,9 +147,11 @@ class GameActivity : AppCompatActivity(), ClickListener {
     }
 
     private fun hidePair(cardIndex: Int) {
+        isWaiting = true
         Handler(Looper.getMainLooper()).postDelayed({
             recyclerView.findViewHolderForAdapterPosition(lastCardIndex)?.itemView?.iv_card?.visibility = View.VISIBLE
             recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.iv_card?.visibility = View.VISIBLE
+            isWaiting = false
         }, 1000)
     }
 }
