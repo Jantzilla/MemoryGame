@@ -1,13 +1,15 @@
 package com.creativesource.memorygame
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.action_bar.*
+import kotlinx.android.synthetic.main.card.view.*
 
 class GameActivity : AppCompatActivity() {
     private lateinit var timer: CountDownTimer
@@ -53,6 +55,10 @@ class GameActivity : AppCompatActivity() {
         timer = object: CountDownTimer(30000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 tv_time.setText((millisUntilFinished / 1000).toString())
+
+                if(tv_time.text == "28") {
+                    flipCards()
+                }
             }
             override fun onFinish() {
 
@@ -84,6 +90,12 @@ class GameActivity : AppCompatActivity() {
             }
         }
         timer.start()
+    }
+
+    private fun flipCards() {
+        for (i in 0..recyclerView.childCount) {
+            recyclerView.findViewHolderForAdapterPosition(i)?.itemView?.iv_card?.visibility = View.VISIBLE
+        }
     }
 
     override fun onDestroy() {
