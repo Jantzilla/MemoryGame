@@ -3,6 +3,7 @@ package com.creativesource.memorygame
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.action_bar.*
 import kotlinx.android.synthetic.main.card.view.*
 
-class GameActivity : AppCompatActivity() {
+class GameActivity : AppCompatActivity(), ClickListener {
     private lateinit var timer: CountDownTimer
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -43,7 +44,7 @@ class GameActivity : AppCompatActivity() {
         cardIds.shuffle()
 
         viewManager = GridLayoutManager(this, columnCount)
-        viewAdapter = CardAdapter(cardIds)
+        viewAdapter = CardAdapter(this, cardIds)
 
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
             setHasFixedSize(true)
@@ -102,4 +103,12 @@ class GameActivity : AppCompatActivity() {
         super.onDestroy()
         timer.cancel()
     }
+
+    override fun onClickListener(i: Int) {
+        Toast.makeText(this, "Card Id $i", Toast.LENGTH_SHORT).show()
+    }
+}
+
+interface ClickListener {
+    fun onClickListener(i:Int)
 }
