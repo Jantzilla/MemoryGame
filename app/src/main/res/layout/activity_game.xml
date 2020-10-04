@@ -107,7 +107,7 @@
             android:gravity="center"
             android:background="@drawable/dialog_background"
             android:text="You Did It!!!"
-            android:textSize="32sp"
+            android:textSize="24sp"
             android:textColor="@color/colorAccent"/>
         <TextView
             android:id="@+id/tv_retry"
@@ -118,7 +118,7 @@
             android:layout_below="@id/tv_dialog"
             android:gravity="center"
             android:background="@drawable/button"
-            android:textSize="32sp"
+            android:textSize="18sp"
             android:textColor="@color/colorAccent"
             android:text="Retry"
             android:visibility="gone"/>
