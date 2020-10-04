@@ -32,7 +32,7 @@ class GameActivity : AppCompatActivity(), ClickListener {
         val actionBar: ActionBar? = this.supportActionBar
         actionBar?.setCustomView(R.layout.action_bar)
         actionBar?.setDisplayShowCustomEnabled(true)
-        actionBar?.setHomeAsUpIndicator(R.mipmap.ic_launcher)
+        actionBar?.setHomeAsUpIndicator(R.drawable.back)
         actionBar?.show()
 
         val columnCount = intent.getIntExtra("Columns", 2)
