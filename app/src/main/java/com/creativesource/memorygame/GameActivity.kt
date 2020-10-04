@@ -2,6 +2,8 @@ package com.creativesource.memorygame
 
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
@@ -138,8 +140,10 @@ class GameActivity : AppCompatActivity(), ClickListener {
     }
 
     private fun hidePair(cardIndex: Int) {
-        recyclerView.findViewHolderForAdapterPosition(lastCardIndex)?.itemView?.iv_card?.visibility = View.VISIBLE
-        recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.iv_card?.visibility = View.VISIBLE
+        Handler(Looper.getMainLooper()).postDelayed({
+            recyclerView.findViewHolderForAdapterPosition(lastCardIndex)?.itemView?.iv_card?.visibility = View.VISIBLE
+            recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.iv_card?.visibility = View.VISIBLE
+        }, 1000)
     }
 }
 
