@@ -168,6 +168,8 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
     }
 
     private fun createFailDialog() {
+        isWaiting = true
+
         rl_dialog.visibility = View.VISIBLE
         tv_dialog.text = "Almost..."
         tv_retry.visibility = View.VISIBLE
