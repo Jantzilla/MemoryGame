@@ -5,21 +5,20 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
+import android.view.animation.Animation.AnimationListener
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+    private lateinit var bounce: Animation
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val typeface = Typeface.createFromAsset(assets, "ColorTube.otf")
-
-        val bounce = AnimationUtils.loadAnimation(this, R.anim.bounce)
-        bounce.repeatMode = Animation.REVERSE
-        bounce.duration = (1000..2000).random().toLong()
 
         val zoom = AnimationUtils.loadAnimation(this, R.anim.zoom)
         zoom.duration = (1000..2000).random().toLong()
@@ -28,16 +27,30 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         btn_1.setOnClickListener(this)
         tv_1.typeface = typeface
-        btn_1.startAnimation(bounce)
+        btn_1.startAnimation(createNewBounce(0))
         btn_2.setOnClickListener(this)
         tv_2.typeface = typeface
-        btn_2.startAnimation(bounce)
+        btn_2.startAnimation(createNewBounce(100))
         btn_3.setOnClickListener(this)
         tv_3.typeface = typeface
-        btn_3.startAnimation(bounce)
+        btn_3.startAnimation(createNewBounce(200))
         btn_4.setOnClickListener(this)
         tv_4.typeface = typeface
-        btn_4.startAnimation(bounce)
+        btn_4.startAnimation(createNewBounce(300))
+    }
+
+    private fun createNewBounce(i: Long): Animation {
+        bounce = AnimationUtils.loadAnimation(this, R.anim.bounce)
+        bounce.repeatMode = Animation.REVERSE
+        bounce.duration = (1000..2000).random().toLong()
+        bounce.startOffset = i
+
+        bounce.setAnimationListener(object : AnimationListener {
+            override fun onAnimationStart(animation: Animation) {}
+            override fun onAnimationEnd(animation: Animation) {}
+            override fun onAnimationRepeat(animation: Animation) {}
+        })
+        return bounce
     }
 
     override fun onClick(v: View?) {
