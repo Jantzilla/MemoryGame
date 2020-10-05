@@ -1,6 +1,7 @@
 package com.creativesource.memorygame
 
 import android.graphics.Typeface
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -9,7 +10,6 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +23,9 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var bob: Animation
+    private lateinit var flipSound: MediaPlayer
+    private lateinit var matchSound: MediaPlayer
+    private lateinit var winSound: MediaPlayer
     private var isWaiting = false
     private var chosenCard = -1
     private var  matched = 0
@@ -44,6 +47,10 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
         val actionBar: ActionBar? = this.supportActionBar
         actionBar?.setDisplayShowTitleEnabled(false)
         actionBar?.show()
+
+        flipSound = MediaPlayer.create(this, R.raw.paper)
+        matchSound = MediaPlayer.create(this, R.raw.ping)
+        winSound = MediaPlayer.create(this, R.raw.win)
 
         bob = AnimationUtils.loadAnimation(this, R.anim.bob)
 
@@ -106,6 +113,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
 
     private fun flipCards() {
         for (i in 0..recyclerView.childCount) {
+            flipSound.start()
             recyclerView.findViewHolderForAdapterPosition(i)?.itemView?.flip_view?.flipTheView()
         }
     }
@@ -133,6 +141,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
             if (chosenCard == cardId) {
                 matched++
                 tv_matched.text = matched.toString()
+                matchSound.start()
                 checkSuccess()
             } else {
                 hidePair(cardIndex)
@@ -146,6 +155,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
 
     private fun checkSuccess() {
         if(matched == pairs) {
+            winSound.start()
             timer.cancel()
             createSuccessDialog()
         }
@@ -169,6 +179,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
         isWaiting = true
         Handler(Looper.getMainLooper()).postDelayed({
             recyclerView.findViewHolderForAdapterPosition(lastCardIndex)?.itemView?.flip_view?.flipTheView()
+            flipSound.start()
             recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.flip_view?.flipTheView()
             isWaiting = false
         }, 1000)
