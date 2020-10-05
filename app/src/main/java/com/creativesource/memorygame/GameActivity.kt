@@ -24,7 +24,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
     private var  matched = 0
     private var lastCardIndex = -1
     private var pairs = 0
-    private var time = "30"
+    private var time = 30
     private val imageIds = intArrayOf(R.drawable.bat, R.drawable.cat, R.drawable.cow, R.drawable.dragon, R.drawable.ghost,
                                      R.drawable.hen, R.drawable.horse, R.drawable.pig, R.drawable.man, R.drawable.spider)
 
@@ -81,13 +81,13 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
 
         timer = object: CountDownTimer(33000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                time = (millisUntilFinished / 1000).toString()
+                time = (millisUntilFinished / 1000).toInt()
 
-                if(time <= "30") {
-                    if(time == "30") {
+                if(time <= 30) {
+                    if(time == 30) {
                         flipCards()
                     }
-                    tv_time.text = time
+                    tv_time.text = time.toString()
                 }
             }
             override fun onFinish() {
