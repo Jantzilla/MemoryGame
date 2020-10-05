@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.wajahatkarim3.easyflipview.EasyFlipView
 import kotlinx.android.synthetic.main.activity_game.*
 import kotlinx.android.synthetic.main.card.view.*
 
@@ -105,7 +106,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
 
     private fun flipCards() {
         for (i in 0..recyclerView.childCount) {
-            recyclerView.findViewHolderForAdapterPosition(i)?.itemView?.iv_card?.visibility = View.VISIBLE
+            recyclerView.findViewHolderForAdapterPosition(i)?.itemView?.flip_view?.flipTheView()
         }
     }
 
@@ -121,8 +122,8 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
     }
 
     private fun revealCard(cardIndex: Int, cardId: Int) {
-        if (recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.iv_card?.visibility == View.VISIBLE) {
-            recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.iv_card?.visibility = View.INVISIBLE
+        if (recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.flip_view?.currentFlipState == EasyFlipView.FlipState.BACK_SIDE) {
+            recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.flip_view?.flipTheView()
             checkMatch(cardId, cardIndex)
         }
     }
@@ -166,8 +167,8 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
     private fun hidePair(cardIndex: Int) {
         isWaiting = true
         Handler(Looper.getMainLooper()).postDelayed({
-            recyclerView.findViewHolderForAdapterPosition(lastCardIndex)?.itemView?.iv_card?.visibility = View.VISIBLE
-            recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.iv_card?.visibility = View.VISIBLE
+            recyclerView.findViewHolderForAdapterPosition(lastCardIndex)?.itemView?.flip_view?.flipTheView()
+            recyclerView.findViewHolderForAdapterPosition(cardIndex)?.itemView?.flip_view?.flipTheView()
             isWaiting = false
         }, 1000)
     }
