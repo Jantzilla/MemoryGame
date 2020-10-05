@@ -153,7 +153,8 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
 
     private fun createSuccessDialog() {
         rl_dialog.visibility = View.VISIBLE
-        rl_dialog.startAnimation(bob)
+
+        tv_dialog.startAnimation(bob)
     }
 
     private fun createFailDialog() {
