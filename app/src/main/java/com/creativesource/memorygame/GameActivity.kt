@@ -1,14 +1,17 @@
 package com.creativesource.memorygame
 
+import android.content.res.Resources
 import android.graphics.Typeface
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
+import android.util.TypedValue
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.annotation.DimenRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -97,7 +100,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
     private fun initializeGridLayout(columnCount: Int, rowCount: Int) {
         viewManager = object : GridLayoutManager(this, columnCount) {
             override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
-                lp.height = (height / rowCount) - 85
+                lp.height = (((height / rowCount) - resources.getFloatValue(R.dimen.grid_margin)).toInt())
                 return true
             }
         }
@@ -109,6 +112,12 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
             adapter = viewAdapter
 
         }
+    }
+
+    fun Resources.getFloatValue(@DimenRes floatRes:Int):Float{
+        val out = TypedValue()
+        getValue(floatRes, out, true)
+        return out.float
     }
 
     private fun initializeCardGrid() {
