@@ -15,12 +15,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var popSound: MediaPlayer
     private lateinit var bounce: Animation
+    private lateinit var slide: Animation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val typeface = Typeface.createFromAsset(assets, "ColorTube.otf")
+
+        slide = AnimationUtils.loadAnimation(this, R.anim.slide_out)
 
         popSound = MediaPlayer.create(this, R.raw.pop)
 
@@ -63,24 +66,28 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val intent = Intent(this,GameActivity::class.java)
         when (v?.id) {
             R.id.btn_1 -> {
+                btn_1.startAnimation(slide)
                 intent.putExtra("Pairs",5)
                 intent.putExtra("Rows",5)
                 intent.putExtra("Columns",2)
                 startActivity(intent)
             }
             R.id.btn_2 -> {
+                btn_2.startAnimation(slide)
                 intent.putExtra("Pairs",6)
                 intent.putExtra("Rows",4)
                 intent.putExtra("Columns",3)
                 startActivity(intent)
             }
             R.id.btn_3 -> {
+                btn_3.startAnimation(slide)
                 intent.putExtra("Pairs",8)
                 intent.putExtra("Rows",4)
                 intent.putExtra("Columns",4)
                 startActivity(intent)
             }
             R.id.btn_4 -> {
+                btn_4.startAnimation(slide)
                 intent.putExtra("Pairs",10)
                 intent.putExtra("Rows",5)
                 intent.putExtra("Columns",4)
