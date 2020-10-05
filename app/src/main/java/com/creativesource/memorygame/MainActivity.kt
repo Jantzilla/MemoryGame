@@ -2,6 +2,7 @@ package com.creativesource.memorygame
 
 import android.content.Intent
 import android.graphics.Typeface
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
@@ -12,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+    private lateinit var popSound: MediaPlayer
     private lateinit var bounce: Animation
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +21,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_main)
 
         val typeface = Typeface.createFromAsset(assets, "ColorTube.otf")
+
+        popSound = MediaPlayer.create(this, R.raw.pop)
 
         val zoom = AnimationUtils.loadAnimation(this, R.anim.zoom)
         zoom.duration = (1000..2000).random().toLong()
@@ -47,7 +51,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         bounce.setAnimationListener(object : AnimationListener {
             override fun onAnimationStart(animation: Animation) {}
-            override fun onAnimationEnd(animation: Animation) {}
+            override fun onAnimationEnd(animation: Animation) {
+                popSound.start()
+            }
             override fun onAnimationRepeat(animation: Animation) {}
         })
         return bounce
