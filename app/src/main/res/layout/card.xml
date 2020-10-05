@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.wajahatkarim3.easyflipview.EasyFlipView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="16dp">
+    android:layout_margin="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:flipOnTouch="true"
+    app:flipEnabled="true"
+    app:flipDuration="400"
+    app:flipFrom="right"
+    app:flipType="horizontal"
+    app:autoFlipBack="false">
 
     <ImageView
         android:id="@+id/iv_front"
@@ -16,7 +22,6 @@
         android:id="@+id/iv_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/card"
-        android:visibility="invisible"/>
+        android:src="@drawable/card"/>
 
-</RelativeLayout>
+</com.wajahatkarim3.easyflipview.EasyFlipView>
