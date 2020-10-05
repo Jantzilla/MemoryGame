@@ -6,6 +6,8 @@ import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +21,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var bob: Animation
     private var isWaiting = false
     private var chosenCard = -1
     private var  matched = 0
@@ -40,6 +43,8 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
         val actionBar: ActionBar? = this.supportActionBar
         actionBar?.setDisplayShowTitleEnabled(false)
         actionBar?.show()
+
+        bob = AnimationUtils.loadAnimation(this, R.anim.bob)
 
         val typeface = Typeface.createFromAsset(assets, "ColorTube.otf")
         tv_time.typeface = typeface
@@ -147,12 +152,15 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
 
     private fun createSuccessDialog() {
         rl_dialog.visibility = View.VISIBLE
+        rl_dialog.startAnimation(bob)
     }
 
     private fun createFailDialog() {
         rl_dialog.visibility = View.VISIBLE
         tv_dialog.text = "Almost..."
         tv_retry.visibility = View.VISIBLE
+
+        tv_retry.startAnimation(bob)
     }
 
     private fun hidePair(cardIndex: Int) {

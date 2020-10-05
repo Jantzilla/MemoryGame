@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -15,14 +17,27 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         val typeface = Typeface.createFromAsset(assets, "ColorTube.otf")
 
+        val bounce = AnimationUtils.loadAnimation(this, R.anim.bounce)
+        bounce.repeatMode = Animation.REVERSE
+        bounce.duration = (1000..2000).random().toLong()
+
+        val bob = AnimationUtils.loadAnimation(this, R.anim.zoom)
+        bob.duration = (1000..2000).random().toLong()
+
+        tv_title.startAnimation(bob)
+
         btn_1.setOnClickListener(this)
         tv_1.typeface = typeface
+        btn_1.startAnimation(bounce)
         btn_2.setOnClickListener(this)
         tv_2.typeface = typeface
+        btn_2.startAnimation(bounce)
         btn_3.setOnClickListener(this)
         tv_3.typeface = typeface
+        btn_3.startAnimation(bounce)
         btn_4.setOnClickListener(this)
         tv_4.typeface = typeface
+        btn_4.startAnimation(bounce)
     }
 
     override fun onClick(v: View?) {
