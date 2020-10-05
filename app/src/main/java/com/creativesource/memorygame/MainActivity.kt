@@ -21,10 +21,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         bounce.repeatMode = Animation.REVERSE
         bounce.duration = (1000..2000).random().toLong()
 
-        val bob = AnimationUtils.loadAnimation(this, R.anim.zoom)
-        bob.duration = (1000..2000).random().toLong()
+        val zoom = AnimationUtils.loadAnimation(this, R.anim.zoom)
+        zoom.duration = (1000..2000).random().toLong()
 
-        tv_title.startAnimation(bob)
+        tv_title.startAnimation(zoom)
 
         btn_1.setOnClickListener(this)
         tv_1.typeface = typeface
