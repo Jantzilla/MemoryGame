@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_game.*
 import kotlinx.android.synthetic.main.card.view.*
 
 class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
+    private lateinit var cardIds: MutableList<Int>
     private lateinit var timer: CountDownTimer
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -38,11 +39,6 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
-
-        iv_back.setOnClickListener(this)
-        iv_dialog_back.setOnClickListener(this)
-        tv_retry.setOnClickListener(this)
-
         this.setSupportActionBar(toolbar)
         val actionBar: ActionBar? = this.supportActionBar
         actionBar?.setDisplayShowTitleEnabled(false)
@@ -62,21 +58,43 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
         tv_dialog.typeface = typeface
         tv_retry.typeface = typeface
 
+        iv_back.setOnClickListener(this)
+        iv_dialog_back.setOnClickListener(this)
+        tv_retry.setOnClickListener(this)
+
         val rowCount = intent.getIntExtra("Rows", 5)
         val columnCount = intent.getIntExtra("Columns", 2)
         pairs = intent.getIntExtra("Pairs", 5)
-
         tv_pairs.text = pairs.toString()
 
-        val cardIds: MutableList<Int> = ArrayList()
+        initializeCardGrid()
 
-        for (i in 1..pairs) {
-            cardIds.add(imageIds[i - 1])
-            cardIds.add(imageIds[i - 1])
+        initializeGridLayout(columnCount, rowCount)
+
+        setTimer()
+    }
+
+    private fun setTimer() {
+        timer = object : CountDownTimer(33000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                time = (millisUntilFinished / 1000).toInt()
+
+                if (time <= 30) {
+                    if (time == 30) {
+                        flipCards()
+                    }
+                    tv_time.text = time.toString()
+                }
+            }
+
+            override fun onFinish() {
+                createFailDialog()
+            }
         }
+        timer.start()
+    }
 
-        cardIds.shuffle()
-
+    private fun initializeGridLayout(columnCount: Int, rowCount: Int) {
         viewManager = object : GridLayoutManager(this, columnCount) {
             override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
                 lp.height = (height / rowCount) - 85
@@ -91,41 +109,23 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
             adapter = viewAdapter
 
         }
+    }
 
-        timer = object: CountDownTimer(33000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                time = (millisUntilFinished / 1000).toInt()
+    private fun initializeCardGrid() {
+        cardIds = ArrayList()
 
-                if(time <= 30) {
-                    if(time == 30) {
-                        flipCards()
-                    }
-                    tv_time.text = time.toString()
-                }
-            }
-            override fun onFinish() {
-
-                createFailDialog()
-            }
+        for (i in 1..pairs) {
+            cardIds.add(imageIds[i - 1])
+            cardIds.add(imageIds[i - 1])
         }
-        timer.start()
+
+        cardIds.shuffle()
     }
 
     private fun flipCards() {
         for (i in 0..recyclerView.childCount) {
             flipSound.start()
             recyclerView.findViewHolderForAdapterPosition(i)?.itemView?.flip_view?.flipTheView()
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        timer.cancel()
-    }
-
-    override fun onClickListener(cardIndex: Int, cardId: Int) {
-        if(!isWaiting) {
-            revealCard(cardIndex, cardId)
         }
     }
 
@@ -199,6 +199,17 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
                 startActivity(intent)
             }
         }
+    }
+
+    override fun onClickListener(cardIndex: Int, cardId: Int) {
+        if(!isWaiting) {
+            revealCard(cardIndex, cardId)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timer.cancel()
     }
 }
 

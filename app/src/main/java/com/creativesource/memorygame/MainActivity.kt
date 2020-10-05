@@ -21,16 +21,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val typeface = Typeface.createFromAsset(assets, "ColorTube.otf")
+        popSound = MediaPlayer.create(this, R.raw.pop)
 
         slide = AnimationUtils.loadAnimation(this, R.anim.slide_out)
 
-        popSound = MediaPlayer.create(this, R.raw.pop)
-
         val zoom = AnimationUtils.loadAnimation(this, R.anim.zoom)
         zoom.duration = (1000..2000).random().toLong()
-
         tv_title.startAnimation(zoom)
+
+        initializeButtons()
+    }
+
+    private fun initializeButtons() {
+        val typeface = Typeface.createFromAsset(assets, "ColorTube.otf")
 
         btn_1.setOnClickListener(this)
         tv_1.typeface = typeface
@@ -59,6 +62,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             override fun onAnimationRepeat(animation: Animation) {}
         })
+
         return bounce
     }
 
