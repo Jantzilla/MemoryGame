@@ -91,6 +91,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
             }
 
             override fun onFinish() {
+                tv_time.text = "0"
                 createFailDialog()
             }
         }
